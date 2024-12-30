@@ -1,0 +1,7 @@
+/cmake-build-debug-event-trace/
+/cmake-build-debug-visual-studio/
+/cmake-build-release-visual-studio/
+/cmake-build-debug/
+/out/
+/.vs/
+/.vscode/
