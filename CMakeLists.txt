@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.5.0)
 project(Neural_Net)
 
-set(CMAKE_CUDA_COMPILER "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.8/bin/nvcc.exe")
+set(CMAKE_CUDA_COMPILER "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.4/bin/nvcc.exe")
+
+
 
 file(GLOB SOURCES
     header_files/*.h
@@ -10,7 +12,7 @@ file(GLOB SOURCES
 
 add_executable(Neural_Net ${SOURCES})
 
-list(APPEND CMAKE_PREFIX_PATH C:/Code_Projects/C++/libtorch)
+list(APPEND CMAKE_PREFIX_PATH "C:/Coding_Projects/C++/libtorch")
 
 find_package(Torch REQUIRED)
 
@@ -26,3 +28,4 @@ if (MSVC)
                  ${TORCH_DLLS}
                  $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 endif (MSVC)
+
