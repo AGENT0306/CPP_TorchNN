@@ -2,6 +2,8 @@
 
 const std::string mnistPath = "C:/Coding_Projects/C++/CPP_TorchNN/out/mnist";
 
+const int batches = 1;
+
 int main(){
   torch::Device device = torch::kCPU;
   if (torch::cuda::is_available()) {
@@ -26,15 +28,20 @@ int main(){
   torch::optim::Adam net_optimizer(net->parameters(), torch::optim::AdamOptions(2e-4));
   //std::cout << "TEST 1!!" << '\n';
   for(torch::data::Example<>& batch : *data_loader){
-    if(i == 1){
+    if(i == batches){
       break;
     }
-    net->zero_grad();
-    //std::cout << "Test 2" << '\n';
+    //net->zero_grad();
+    std::cout << "Test 2" << '\n';
     torch::Tensor outputs = net->forward(batch.data.to(device));
-    //std::cout << "Test 3" << '\n';
+    //std::cout << outputs << std::endl;
+    outputs = outputs.squeeze();
+    outputs = torch::mean(outputs, 1);
+    std::cout << "Test 3" << '\n';
+    std::cout << "outputs shape: " << outputs.sizes() << std::endl;
+    std::cout << "batch.target shape: " << batch.target.sizes() << std::endl;
     //torch::Tensor loss = torch::binary_cross_entropy(outputs, batch.target).to(device);
-    //std::cout << "Test 4" << '\n';
+    std::cout << "Test 4" << '\n';
     //loss.backward();
     //net_optimizer.step();
     
