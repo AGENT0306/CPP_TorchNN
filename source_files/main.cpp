@@ -1,8 +1,12 @@
+#include <fstream>
+
 #include "../header_files/NN.h"
+#include <iostream>
 
 const std::string mnistPath = "../mnist";
 
 const int batches = 1; // how many batches to train on
+
 
 int main(){
   //checks if CUDA GPU is available
@@ -15,7 +19,12 @@ int main(){
     std::cout << "ERROR!!! Training on CPU." << std::endl;
   }
 
-  NNet* net = new NNet(28, 10); // defines neural network
+
+
+  return 0;
+}
+
+/*NNet* net = new NNet(28, 10); // defines neural network
 
   net->to(device); //sets active device to CPU or GPU
 
@@ -25,9 +34,6 @@ int main(){
   auto data_loader = torch::data::make_data_loader( //creates data batches for training
     std::move(dataset),
     torch::data::DataLoaderOptions().batch_size(64).workers(2));
-  
-  torch::optim::Adam net_optimizer(net->parameters(), torch::optim::AdamOptions(2e-4)); // optimizer for neural network
-                                                                                                          // handles the models' learning/gradients
 
   int i = 0;
 
@@ -35,21 +41,14 @@ int main(){
     if(i == batches){
       break;
     }
-    net->zero_grad();
+    auto data = batch.data.to(device);
 
-    torch::Tensor outputs = net->forward(batch.data.to(device)); // this runs neural network
+    for (int i = 0; i < data.size(0); i++) {
+      data[i][0] = data[i][0].flatten();
+      std::cout << data[i] << std::endl;
+    }
 
-    outputs = outputs.squeeze(); // removes extra dimensions
-    outputs = torch::mean(outputs, 1); // will change to find highest value later, currently just finds mean
-    std::cout << "test 4" << std::endl;
-    torch::Tensor loss = torch::binary_cross_entropy(outputs, batch.target).to(device); // calculates loss of neural network
-
-    loss.backward(); //runs backpropagation
-    net_optimizer.step(); //updates weights
-
-    std::cout << outputs << '\n';
+    //data.flatten(2,3);
+    //std::cout << data;
     i++;
-  }
-
-  
-}
+  }*/

@@ -10,16 +10,19 @@ file(GLOB SOURCES
     source_files/*.cpp
     )
 
-add_executable(Neural_Net ${SOURCES})
+add_executable(Neural_Net ${SOURCES}
+        header_files/Embeddings.h
+        source_files/Embeddings.cpp
+        header_files/customDataset.h
+        source_files/customDataset.cpp)
 
-list(APPEND CMAKE_PREFIX_PATH "C:/Coding_Projects/C++/libtorch")
-list(APPEND CMAKE_PREFIX_PATH "C:/Coding_Projects/C++/debugLibTorch")
+list(APPEND CMAKE_PREFIX_PATH debug "C:/Coding_Projects/C++/libtorch")
 
 find_package(Torch REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
-target_link_libraries(${PROJECT_NAME} "${TORCH_LIBRARIES}")
-target_link_libraries(${PROJECT_NAME} debug "${TORCH_DEBUG_LIBRARIES}")
+target_link_libraries(${PROJECT_NAME} optimized "${TORCH_LIBRARIES}")
+target_link_libraries(${PROJECT_NAME} debug "${TORCH_LIBRARIES}")
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
